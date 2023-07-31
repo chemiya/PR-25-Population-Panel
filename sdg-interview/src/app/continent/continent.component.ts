@@ -12,7 +12,7 @@ import { Chart } from 'chart.js';
 export class ContinentComponent {
   constructor(private restCountriesService: RestCountriesService,private route: ActivatedRoute){}
   countries: Country[] = [];
-  showCarts=false;
+  showChart="bar";
   chart: any;
   
   ngOnInit(){
@@ -42,7 +42,7 @@ export class ContinentComponent {
           
           
 
-          this.createChart("bar");
+          this.initialChart();
 
         },
         error: (e) => console.error(e)
@@ -52,74 +52,59 @@ export class ContinentComponent {
 
   }
 
-  createChart(typeChart: any) {
-
-   
-
+  initialChart(){
     var countriesNames:string[];
     countriesNames= this.countries.map(item => item.name);
     var countriesPopulations:number[];
     countriesPopulations = this.countries.map(item => item.population);
 
-    
 
 
-    if (typeChart != "cards") {
-      this.showCarts=false;
-      var data = {
-        labels: countriesNames,
-        datasets: [{
-          label: 'Population in country',
-          data: countriesPopulations,
-          borderWidth: 1
-        }]
-      }
-  
-      var options: any;
-      if (typeChart == "bar") {
-        options = {
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Continent'
-              }
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'Population'
-              }
+    this.showChart="bar";
+    var data = {
+      labels: countriesNames,
+      datasets: [{
+        label: 'Population in country',
+        data: countriesPopulations,
+        borderWidth: 1
+      }]
+    }
+
+    var options: any;
+      options = {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Continent'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Population'
             }
           }
         }
-      } else if (typeChart == "pie") {
-        options = {
-          responsive: true,
-          maintainAspectRatio: false
-        };
       }
-  
-  
-      if (this.chart) {
-        this.chart.destroy();
-      }
-  
-  
-      this.chart = new Chart("myChart", {
-        type: typeChart,
-        data: data,
-        options: options
-      });
-    }else{
-      this.showCarts=true;
-    }
-    
 
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+
+    this.chart = new Chart("myChart", {
+      type: "bar",
+      data: data,
+      options: options
+    });
 
   }
+
   changeSelectChart(event: any) {
-    this.createChart(event.target.value)
+    this.showChart=event.target.value
+    
   }
 
 }
