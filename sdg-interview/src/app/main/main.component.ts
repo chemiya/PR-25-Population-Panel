@@ -27,30 +27,52 @@ export class MainComponent {
 
   ngOnInit() {
     this.fetchData();
-    this.chart();
+   
 
 
   }
 
   chart(){
-    var barChart=new Chart("myChart", {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
+    
+    
+
+    var data= {
+      labels: ["Europe","Asia","Africa","Oceania","North America","South America","Antarctica"],
+      datasets: [{
+        label: 'Population in continent',
+        data: [this.populations["Europe"],this.populations["Asia"],this.populations["Africa"],this.populations["Oceania"],this.populations["North America"],this.populations["South America"],this.populations["Antarctica"]],
+        borderWidth: 1
+      }]
+    }
+
+    var options= {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Continent'
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Population'
           }
         }
-      }
-    });
+    }
+  }
+
+  /*
+  var options = {
+    responsive: true,
+    maintainAspectRatio: false
+};*/
+
+    var chart = new Chart("myChart", {
+      type: "bar",//pie
+      data: data,
+      options: options
+  });
   }
 
 
@@ -94,10 +116,13 @@ export class MainComponent {
 
           });
 
+          this.chart();
+
         },
         error: (e) => console.error(e)
       });
 
+      
       
   }
 
