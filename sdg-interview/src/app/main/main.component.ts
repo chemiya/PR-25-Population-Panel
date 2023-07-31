@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { RestCountriesService } from '../rest-countries-service/rest-countries.service';
 
+import { Chart, registerables} from 'chart.js';
+
+Chart.register(...registerables);
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -23,9 +27,33 @@ export class MainComponent {
 
   ngOnInit() {
     this.fetchData();
+    this.chart();
 
 
   }
+
+  chart(){
+    var barChart=new Chart("myChart", {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+
   fetchData() {
     this.restCountriesService.getData()//busco el usuario
       .subscribe({
