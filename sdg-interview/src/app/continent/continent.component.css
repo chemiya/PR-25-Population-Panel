@@ -12,3 +12,24 @@
     color:black;
     
 }
+
+.image-table{
+    width:100px;
+    
+}
+
+td{
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.card-population{
+    background-color: #0070AF;
+    color:white;
+    border-radius:10px;
+    height:100%;
+}
+
+.image-card{
+    width:150px;
+}
