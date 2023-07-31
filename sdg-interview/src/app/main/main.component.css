@@ -1,0 +1,13 @@
+.chart-div{
+    width: 600px;
+    height: 600px;
+}
+.navbar{
+    background-color: #0070AF;
+}
+
+.card-population{
+    background-color: #0070AF;
+    color:white;
+    border-radius:10px;
+}

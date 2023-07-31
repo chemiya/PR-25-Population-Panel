@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <h1>SDG-Interview</h1>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item p-2">
+                        <select class="form-select" (change)="changeSelectChart($event)">
+                            <option selected value="bar">Bar chart</option>
+                            <option value="pie">Pie chart</option>
+                            <option value="cards">Cards</option>
+                        </select>
+                    </li>
+                    <li class="nav-item p-2">
+                        <select class="form-select">
+                            <option selected value="continent">Select continent</option>
+                            <option value="europe">Europe</option>
+                            <option value="asia">Asia</option>
+                            <option value="africa">Africa</option>
+                            <option value="oceania">Oceania</option>
+                            <option value="northAmerica">North America</option>
+                            <option value="southAmerica">South America</option>
+                            <option value="antarctica">Antarctica</option>
+                        </select>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container" *ngIf="!showCarts; else cartsView">
+        <div class="row">
+            <div class="col">
+
+                <mat-slider min="200" max="500">
+                    <input value="300" matSliderStartThumb>
+                    <input value="400" matSliderEndThumb>
+                </mat-slider>
+
+                <div class="chart-div">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <ng-template #cartsView>
+        <div class="container">
+            <div class="row flex" >
+                <div class="col-12 col-md-4 p-2" *ngFor="let population of populations">
+                    <div class="card-population p-2">
+                        <p>{{population.name}}</p>
+                        <p>{{population.population}} people</p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            
+        </div>
+    </ng-template>
+</body>
+
+</html>
