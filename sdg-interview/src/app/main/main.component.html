@@ -26,7 +26,7 @@
                         </select>
                     </li>
                     <li class="nav-item p-2">
-                        <select class="form-select">
+                        <select class="form-select" (change)="changeSelectContinent($event)">
                             <option selected value="continent">Select continent</option>
                             <option value="europe">Europe</option>
                             <option value="asia">Asia</option>

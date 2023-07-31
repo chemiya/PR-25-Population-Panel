@@ -7,11 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MainComponent } from './main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from '@angular/material/slider';
+import { ContinentComponent } from './continent/continent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    ContinentComponent
   ],
   imports: [
     BrowserModule,
