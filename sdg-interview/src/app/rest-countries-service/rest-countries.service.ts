@@ -16,4 +16,8 @@ export class RestCountriesService {
     const url = `${this.apiUrl}all`;
     return this.http.get<any>(url);
   }
+  dataOfContinent(continent:string): Observable<any> {
+    const url = `${this.apiUrl}region/${continent}`;
+    return this.http.get<any>(url);
+  }
 }

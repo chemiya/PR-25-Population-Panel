@@ -3,6 +3,7 @@ import { RestCountriesService } from '../rest-countries-service/rest-countries.s
 
 import { Chart, registerables } from 'chart.js';
 import { Continent } from '../models/Continent';
+import { Router } from '@angular/router';
 
 Chart.register(...registerables);
 
@@ -12,10 +13,12 @@ Chart.register(...registerables);
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
-  constructor(private restCountriesService: RestCountriesService) { }
+  constructor(private restCountriesService: RestCountriesService,private router: Router) { }
   allCountries: any = [];
   chart: any;
   showCarts=false;
+
+ 
 
   //populations: number[] = [0, 0, 0, 0, 0, 0, 0];
 
@@ -47,6 +50,9 @@ export class MainComponent {
   }
   changeSelectChart(event: any) {
     this.createChart(event.target.value)
+  }
+  changeSelectContinent(event: any) {
+    this.router.navigate(['/continent/'+event.target.value])
   }
   getObjectKeys(obj: any): any[] {
     return Object.entries(obj);
