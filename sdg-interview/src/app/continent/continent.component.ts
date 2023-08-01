@@ -117,7 +117,7 @@ export class ContinentComponent {
     }
 
 
-    this.chart = new Chart("myChart", {
+    this.chart = new Chart("chart", {
       type: "bar",
       data: data,
       options: options
