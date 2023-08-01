@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
+    <!--navbar-->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <h1 class="title">SDG-Interview</h1>
@@ -18,6 +21,7 @@
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item p-2 ">
+                        <!--select for changing chart-->
                         <select class="form-select" (change)="changeSelectChart($event)">
                             <option selected value="bar">Bar chart</option>
                             <option value="table">Table</option>
@@ -25,7 +29,9 @@
                         </select>
                     </li>
                     <li class="nav-item p-2 d-flex justify-content-center">
-                        <a class="return-a d-flex justify-content-center align-items-center flex-col" href="/">Return to continents</a>
+                        <!--link to return main view-->
+                        <a class="return-a d-flex justify-content-center align-items-center flex-col" href="/">Return to
+                            continents</a>
                     </li>
 
                 </ul>
@@ -33,23 +39,27 @@
         </div>
     </nav>
 
+
+
     <div class="container mt-3">
         <div class="row">
             <div class="col">
                 <h1 class="text-center">Population distribution in {{continent}}</h1>
                 <div class="slider-div d-flex justify-content-center align-items-center">
                     <p class="me-2 mt-3">Filter by population</p>
-                    <mat-slider class="slider" min="0" max="1500000000" >
+                    <!--slider to filter by population-->
+                    <mat-slider class="slider" min="0" max="1500000000">
                         <input value="0" matSliderStartThumb (input)="inputChangeMin($event)">
                         <input value="1500000000" matSliderEndThumb (input)="inputChangeMax($event)">
                     </mat-slider>
                     <button class="ms-2 button-apply" (click)="applySlider()">Apply</button>
                 </div>
-                
-                
+
+
             </div>
         </div>
 
+        <!--values of the slider-->
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-6">
                 <div class="values-slider d-flex justify-content-around align-items-center">
@@ -60,40 +70,44 @@
         </div>
     </div>
 
+    <!--table with the countries-->
     <div class="container" *ngIf="showChart=='table'">
         <div class="row">
             <div class="col">
                 <table class="table">
                     <thead>
-                      <tr>
-                        <th scope="col">Name of the country</th>
-                        <th scope="col">Population</th>
-                        <th scope="col">Flag</th>
-                        <th scope="col">Capital</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Name of the country</th>
+                            <th scope="col">Population</th>
+                            <th scope="col">Flag</th>
+                            <th scope="col">Capital</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let country of countriesFilter" >
-                        <td>{{country.name}}</td>
-                        <td>{{country.population}}</td>
-                        <td><img [src]="country.flag" class="image-table"/></td>
-                        <td>{{country.capital}}</td>
-                      </tr>
-                     
+                        <!--data of every country-->
+                        <tr *ngFor="let country of countriesFilter">
+                            <td>{{country.name}}</td>
+                            <td>{{country.population}}</td>
+                            <td><img [src]="country.flag" class="image-table" /></td>
+                            <td>{{country.capital}}</td>
+                        </tr>
+
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
     </div>
 
 
+
+    <!--cards grid-->
     <div class="container" *ngIf="showChart=='cards'">
-        <div class="row " >
+        <div class="row ">
             <div class="col-12 col-md-4 p-2" *ngFor="let country of countriesFilter">
                 <div class="card-population p-2 d-flex justify-content-center align-items-center flex-column">
-                    <img [src]="country.flag" class="image-card"/>
+                    <img [src]="country.flag" class="image-card" />
                     <p class="country-name">{{country.name}}</p>
-                    <p>{{country.population}} people</p>
+                    <p>{{country.population}} inhabitants</p>
                     <p>{{country.capital}}</p>
                 </div>
 
@@ -101,10 +115,11 @@
             </div>
         </div>
 
-        
+
     </div>
 
-    <div class="container" [ngClass]="visibilityChart">
+    <!--container to show the chart-->
+    <div class="container">
         <div class="row">
             <div class="col">
                 <div class="chart-div">
@@ -115,13 +130,10 @@
     </div>
 
 
-   
 
-    
-    
+
+
+
 </body>
+
 </html>
-
-
-
-
