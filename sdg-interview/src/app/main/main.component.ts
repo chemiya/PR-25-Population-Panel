@@ -136,7 +136,7 @@ export class MainComponent {
           y: {
             title: {
               display: true,
-              text: 'Population'
+              text: 'Inhabitants'
             }
 
           }

@@ -1,9 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 
-.title{
-    color:white;
-  }
+.title {
+  color: white;
+}
+
+.button-apply {
+
+  background-color: #0070AF;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+
+}
+
+.button-apply:hover {
+  background-color: #043d5e;
+}
+
+/*to make the chart bigger*/
+#chart {
+  height: 400px;
+}
+
+.navbar{
+  background-color: #0070AF;
+}

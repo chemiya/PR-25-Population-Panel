@@ -10,58 +10,54 @@ import { Chart } from 'chart.js';
   styleUrls: ['./continent.component.css']
 })
 export class ContinentComponent {
-  constructor(private restCountriesService: RestCountriesService,private route: ActivatedRoute){}
+  constructor(private restCountriesService: RestCountriesService, private route: ActivatedRoute) { }
   countries: Country[] = [];
   countriesFilter: Country[] = [];
-  showChart="bar";
+  showChart = "bar";
   chart: any;
-  minSlider:number=0;
-  maxSlider:number=1500000000;
-  continent="";
-  visibilityChart="show-chart"
-  
-  ngOnInit(){
-    this.continent=this.route.snapshot.params["continent"];
+  minSlider: number = 0;
+  maxSlider: number = 1500000000;
+  continent = "";
+
+
+  ngOnInit() {
+    this.continent = this.route.snapshot.params["continent"];//we obtain the name of the continent
     this.dataOfContinent(this.continent)
   }
 
-  dataOfContinent(continent:string) {
-    this.restCountriesService.dataOfContinent(continent)//busco el usuario
+  dataOfContinent(continent: string) {
+    this.restCountriesService.dataOfContinent(continent)
       .subscribe({
         next: (data) => {
-          
-         
 
-          data.forEach((country:any)=>{
-          
-            
-            
-            
-            
-            
-            if(country.capital==undefined){
-              var countryElement=new Country(country.name.common,country.population,country.flags.png,"no data")
-            
+
+          //we obtain all the data from the countries in the continent
+          data.forEach((country: any) => {
+
+            //in some cases the capital is not defined
+            if (country.capital == undefined) {
+              var countryElement = new Country(country.name.common, country.population, country.flags.png, "no data")
+
               this.countries.push(countryElement)
-            }else{
-              var countryElement=new Country(country.name.common,country.population,country.flags.png,country.capital[0])
-            
+            } else {
+              var countryElement = new Country(country.name.common, country.population, country.flags.png, country.capital[0])
+
               this.countries.push(countryElement)
             }
-            
-              
-            
+
+
+
           })
 
 
 
 
-          this.countriesFilter=this.countries;
-          
-          this.initialChart();
-          
+          this.countriesFilter = this.countries;//we store the original data in another array to filter it
 
-          
+          this.createChart();//first, we create a bar char
+
+
+
 
         },
         error: (e) => console.error(e)
@@ -71,17 +67,18 @@ export class ContinentComponent {
 
   }
 
- 
-
-  initialChart(){
-    var countriesNames:string[];
-    countriesNames= this.countries.map(item => item.name);
-    var countriesPopulations:number[];
-    countriesPopulations = this.countries.map(item => item.population);
 
 
+  createChart() {
+    //we obtain the names and populations of each country
+    var countriesNames: string[];
+    countriesNames = this.countriesFilter.map(item => item.name);
+    var countriesPopulations: number[];
+    countriesPopulations = this.countriesFilter.map(item => item.population);
 
-    this.showChart="bar";
+
+    //we define the chart
+    this.showChart = "bar";
     var data = {
       labels: countriesNames,
       datasets: [{
@@ -92,24 +89,24 @@ export class ContinentComponent {
     }
 
     var options: any;
-      options = {
-        responsive: true,
-        maintainAspectRatio: false, 
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Continent'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Population'
-            }
+    options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Country'
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Inhabitants'
           }
         }
       }
+    }
 
 
     if (this.chart) {
@@ -125,30 +122,35 @@ export class ContinentComponent {
 
   }
 
-  
-  applySlider(){
-    this.countriesFilter=this.countries.filter((country)=>(country.population<=this.maxSlider && country.population>=this.minSlider))
-  console.log(this.countriesFilter)
-  }
-
-  inputChangeMin(event:any){
-    this.minSlider=(event.target.value)
-  }
-
-  inputChangeMax(event:any){
-    this.maxSlider=(event.target.value)
-  }
-
-  changeSelectChart(event: any) {
-    if(event.target.value!="bar"){
-      this.visibilityChart="hide-chart"
-    }else{
-      this.visibilityChart="show-chart"
+//to apply the filter of population with the values of the slider
+  applySlider() {
+    //we filter the continents that fulfill the conditions
+    this.countriesFilter = this.countries.filter((country) => (country.population <= this.maxSlider && country.population >= this.minSlider))
+    if(this.showChart=="bar"){//if bar chart is selected, we create a new one with the new data
+      this.chart.destroy();
+      this.createChart()
     }
-    
-    this.showChart=event.target.value
-    
-    
+  }
+
+  inputChangeMin(event: any) {
+    this.minSlider = (event.target.value)
+  }
+
+  inputChangeMax(event: any) {
+    this.maxSlider = (event.target.value)
+  }
+
+  //to manage when the user change the chart
+  changeSelectChart(event: any) {
+  
+    this.showChart = event.target.value//we store the type of chart
+    this.chart.destroy();
+    if(this.showChart=="bar"){//if the user wants a bar chart, we create a new one
+      
+      this.createChart()
+    }
+
+
   }
 
 }

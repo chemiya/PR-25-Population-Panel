@@ -1,36 +1,17 @@
 
-.navbar{
+
+.card-population {
     background-color: #0070AF;
+    color: white;
+    border-radius: 10px;
 }
 
-.card-population{
-    background-color: #0070AF;
-    color:white;
-    border-radius:10px;
-}
-
-.slider{
+.slider {
     width: 500px;
 }
 
-.button-apply{
-    
-    background-color: #0070AF;
-    border:none;
-    border-radius: 10px;
-    padding:10px;
-    color:white;
-    
-}
 
-
-
-/*to make the chart bigger*/
-  #chart{
-    height:400px;
-  }
-
-  .continent-name{
+.continent-name {
     font-size: 30px;
     font-weight: bold;
 }
