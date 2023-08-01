@@ -18,7 +18,7 @@ export class MainComponent {
   chart: any;
   showCarts=false;
   minSlider:number=0;
-  maxSlider:number=7000;
+  maxSlider:number=7000000000;
 
  
 
@@ -67,9 +67,7 @@ export class MainComponent {
   changeSelectContinent(event: any) {
     this.router.navigate(['/continent/'+event.target.value])
   }
-  getObjectKeys(obj: any): any[] {
-    return Object.entries(obj);
-  }
+  
 
   applySlider(){
     this.populationsFilter=this.populations.filter((continent)=>(continent.population<=this.maxSlider && continent.population>=this.minSlider))
