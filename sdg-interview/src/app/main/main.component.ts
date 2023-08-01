@@ -17,6 +17,8 @@ export class MainComponent {
   allCountries: any = [];
   chart: any;
   showCarts=false;
+  minSlider:number=0;
+  maxSlider:number=7000;
 
  
 
@@ -32,6 +34,17 @@ export class MainComponent {
     "Antarctica": 0
   }*/
   populations:Continent[]=[
+    {name:"Europe",population:0},
+    {name:"Asia",population:0},
+    {name:"Africa",population:0},
+    {name:"Oceania",population:0},
+    {name:"North America",population:0},
+    {name:"South America",population:0},
+    {name:"Antarctica",population:0}
+
+  ];
+
+  populationsFilter:Continent[]=[
     {name:"Europe",population:0},
     {name:"Asia",population:0},
     {name:"Africa",population:0},
@@ -58,6 +71,19 @@ export class MainComponent {
     return Object.entries(obj);
   }
 
+  applySlider(){
+    this.populationsFilter=this.populations.filter((continent)=>(continent.population<=this.maxSlider && continent.population>=this.minSlider))
+  
+  }
+
+  inputChangeMin(event:any){
+    this.minSlider=(event.target.value)
+  }
+
+  inputChangeMax(event:any){
+    this.maxSlider=(event.target.value)
+  }
+
   createChart(typeChart: any) {
 
 
@@ -70,7 +96,7 @@ export class MainComponent {
         labels: ["Europe", "Asia", "Africa", "Oceania", "North America", "South America", "Antarctica"],
         datasets: [{
           label: 'Population in continent',
-          data: [this.populations[0].population,this.populations[1].population,this.populations[2].population,this.populations[3].population,this.populations[4].population,this.populations[5].population,this.populations[6].population],
+          data: [this.populationsFilter[0].population,this.populationsFilter[1].population,this.populationsFilter[2].population,this.populationsFilter[3].population,this.populationsFilter[4].population,this.populationsFilter[5].population,this.populationsFilter[6].population],
           borderWidth: 1
         }]
       }
@@ -161,6 +187,7 @@ export class MainComponent {
 
           });
 
+          this.populationsFilter=this.populations;
           this.createChart("bar");
 
         },

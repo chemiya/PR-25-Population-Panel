@@ -12,3 +12,13 @@
 .slider{
     width: 500px;
 }
+
+.button-apply{
+    
+    background-color: #0070AF;
+    border:none;
+    border-radius: 10px;
+    padding:10px;
+    color:white;
+    
+}
