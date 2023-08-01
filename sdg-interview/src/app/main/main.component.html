@@ -39,8 +39,8 @@
                             <option value="Oceania">Oceania</option>
                             <option value="North America">North America</option>
                             <option value="South America">South America</option>
-                            
-                            
+
+
                         </select>
                     </li>
 
@@ -54,34 +54,22 @@
         <div class="row">
             <div class="col">
                 <h1 class="text-center">World population distribution by continents</h1>
-                <div class="slider-div d-flex justify-content-center align-items-center">
-                    <p class="me-2 mt-3">Filter by population</p>
-                    <!--slider to filter by population-->
-                    <mat-slider class="slider" min="0" max="7000000000" >
-                        <input value="0" matSliderStartThumb (input)="inputChangeMin($event)">
-                        <input value="7000000000" matSliderEndThumb (input)="inputChangeMax($event)">
-                    </mat-slider>
-                    <button class="ms-2 button-apply" (click)="applySlider()">Apply</button>
-                </div>
                 
+                   <app-slider [max]="7000000000" (valuesSlider)="applySlider($event)"></app-slider>
                 
+               
+
+
+
             </div>
         </div>
 
-        <!--values of the slider-->
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-6">
-                <div class="values-slider d-flex justify-content-around align-items-center">
-                    <p>Min: {{minSlider}}</p>
-                    <p>Max: {{maxSlider}}</p>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <!--cards grid-->
     <div class="container" *ngIf="showCarts">
-        <div class="row " >
+        <div class="row ">
             <div class="col-12 col-md-4 p-2" *ngFor="let population of populationsFilter">
                 <div class="card-population p-2">
                     <p class="continent-name">{{population.name}}</p>
@@ -92,7 +80,7 @@
             </div>
         </div>
 
-        
+
     </div>
 
     <!--container to show the chart-->
@@ -108,9 +96,9 @@
 
 
 
-    
-        
-    
+
+
+
 </body>
 
 </html>

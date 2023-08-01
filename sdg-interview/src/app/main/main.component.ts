@@ -17,8 +17,7 @@ export class MainComponent {
   allCountries: any = [];
   chart: any;
   showCarts = false;
-  minSlider: number = 0;
-  maxSlider: number = 7000000000;
+  
   actualChart="bar"
 
 
@@ -74,9 +73,10 @@ export class MainComponent {
   }
 
   //to apply the filter of population with the values of the slider
-  applySlider() {
+  applySlider(event:any) {
     //we filter the continents that fulfill the conditions
-    this.populationsFilter = this.populations.filter((continent) => (continent.population <= this.maxSlider && continent.population >= this.minSlider))
+    
+    this.populationsFilter = this.populations.filter((continent) => (continent.population <= event[1] && continent.population >= event[0]))
     if(this.actualChart=="bar"){
       this.chart.destroy();
       this.createChart("bar")
@@ -88,15 +88,7 @@ export class MainComponent {
     
   }
 
-  //when the min value of the slider change, we store the new value
-  inputChangeMin(event: any) {
-    this.minSlider = event.target.value
-  }
-
-  //when the max value of the slider change, we store the new value
-  inputChangeMax(event: any) {
-    this.maxSlider = event.target.value
-  }
+  
 
   createChart(typeChart: any) {
 

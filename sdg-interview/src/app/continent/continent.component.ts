@@ -123,22 +123,16 @@ export class ContinentComponent {
   }
 
 //to apply the filter of population with the values of the slider
-  applySlider() {
+  applySlider(event:any) {
     //we filter the continents that fulfill the conditions
-    this.countriesFilter = this.countries.filter((country) => (country.population <= this.maxSlider && country.population >= this.minSlider))
+    this.countriesFilter = this.countries.filter((country) => (country.population <= event[1] && country.population >= event[0]))
     if(this.showChart=="bar"){//if bar chart is selected, we create a new one with the new data
       this.chart.destroy();
       this.createChart()
     }
   }
 
-  inputChangeMin(event: any) {
-    this.minSlider = (event.target.value)
-  }
-
-  inputChangeMax(event: any) {
-    this.maxSlider = (event.target.value)
-  }
+  
 
   //to manage when the user change the chart
   changeSelectChart(event: any) {
