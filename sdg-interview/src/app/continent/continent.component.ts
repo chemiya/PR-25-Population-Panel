@@ -12,11 +12,16 @@ import { Chart } from 'chart.js';
 export class ContinentComponent {
   constructor(private restCountriesService: RestCountriesService,private route: ActivatedRoute){}
   countries: Country[] = [];
+  countriesFilter: Country[] = [];
   showChart="bar";
   chart: any;
+  minSlider:number=0;
+  maxSlider:number=1500000000;
+  continent="";
   
   ngOnInit(){
-    this.dataOfContinent(this.route.snapshot.params["continent"])
+    this.continent=this.route.snapshot.params["continent"];
+    this.dataOfContinent(this.continent)
   }
 
   dataOfContinent(continent:string) {
@@ -24,12 +29,25 @@ export class ContinentComponent {
       .subscribe({
         next: (data) => {
           
-          var contador=0;
+         
 
           data.forEach((country:any)=>{
-            var countryElement=new Country(country.name.common,country.population,country.flags.png,country.capital[0])
+          
+            
+            
+            
+            
+            
+            if(country.capital==undefined){
+              var countryElement=new Country(country.name.common,country.population,country.flags.png,"no data")
             
               this.countries.push(countryElement)
+            }else{
+              var countryElement=new Country(country.name.common,country.population,country.flags.png,country.capital[0])
+            
+              this.countries.push(countryElement)
+            }
+            
               
             
           })
@@ -37,7 +55,7 @@ export class ContinentComponent {
 
 
 
-          
+          this.countriesFilter=this.countries;
           
           this.initialChart();
           
@@ -102,6 +120,20 @@ export class ContinentComponent {
       options: options
     });
 
+  }
+
+  
+  applySlider(){
+    this.countriesFilter=this.countries.filter((country)=>(country.population<=this.maxSlider && country.population>=this.minSlider))
+  console.log(this.countriesFilter)
+  }
+
+  inputChangeMin(event:any){
+    this.minSlider=(event.target.value)
+  }
+
+  inputChangeMax(event:any){
+    this.maxSlider=(event.target.value)
   }
 
   changeSelectChart(event: any) {

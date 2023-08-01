@@ -28,13 +28,14 @@
                     <li class="nav-item p-2">
                         <select class="form-select" (change)="changeSelectContinent($event)">
                             <option selected value="continent">Select continent</option>
-                            <option value="europe">Europe</option>
-                            <option value="asia">Asia</option>
-                            <option value="africa">Africa</option>
-                            <option value="oceania">Oceania</option>
-                            <option value="northAmerica">North America</option>
-                            <option value="southAmerica">South America</option>
-                            <option value="antarctica">Antarctica</option>
+                            <option value="Europe">Europe</option>
+                            <option value="Asia">Asia</option>
+                            <option value="Africa">Africa</option>
+                            <option value="Oceania">Oceania</option>
+                            <option value="North America">North America</option>
+                            <option value="South America">South America</option>
+                            
+                            
                         </select>
                     </li>
 
@@ -89,7 +90,7 @@
     <ng-template #cartsView>
         <div class="container">
             <div class="row " >
-                <div class="col-12 col-md-4 p-2" *ngFor="let population of populations">
+                <div class="col-12 col-md-4 p-2" *ngFor="let population of populationsFilter">
                     <div class="card-population p-2">
                         <p>{{population.name}}</p>
                         <p>{{population.population}} people</p>
