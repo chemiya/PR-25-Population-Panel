@@ -39,10 +39,10 @@ export class ContinentComponent {
 
           
           
-          
+          this.initialChart();
           
 
-          this.initialChart();
+          
 
         },
         error: (e) => console.error(e)
@@ -51,6 +51,8 @@ export class ContinentComponent {
 
 
   }
+
+ 
 
   initialChart(){
     var countriesNames:string[];
@@ -104,6 +106,7 @@ export class ContinentComponent {
 
   changeSelectChart(event: any) {
     this.showChart=event.target.value
+    
     
   }
 

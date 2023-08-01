@@ -33,3 +33,8 @@ td{
 .image-card{
     width:150px;
 }
+
+.country-name{
+    font-size: 30px;
+    font-weight: bold;
+}

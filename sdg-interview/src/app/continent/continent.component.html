@@ -76,7 +76,7 @@
             <div class="col-12 col-md-4 p-2" *ngFor="let country of countries">
                 <div class="card-population p-2 d-flex justify-content-center align-items-center flex-column">
                     <img [src]="country.flag" class="image-card"/>
-                    <p>{{country.name}}</p>
+                    <p class="country-name">{{country.name}}</p>
                     <p>{{country.population}} people</p>
                     <p>{{country.capital}}</p>
                 </div>
