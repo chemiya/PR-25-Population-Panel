@@ -52,3 +52,12 @@ td{
     color:white;
     
 }
+
+.hide-chart{
+    visibility: hidden;
+  }
+  
+ 
+.show-chart {
+    visibility: visible;
+  }

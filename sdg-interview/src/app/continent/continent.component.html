@@ -60,17 +60,6 @@
         </div>
     </div>
 
-    <div class="container" *ngIf="showChart=='bar'">
-        <div class="row">
-            <div class="col">
-                <div class="chart-div">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="container" *ngIf="showChart=='table'">
         <div class="row">
             <div class="col">
@@ -114,6 +103,19 @@
 
         
     </div>
+
+    <div class="container" [ngClass]="visibilityChart">
+        <div class="row">
+            <div class="col">
+                <div class="chart-div">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
 
     
     

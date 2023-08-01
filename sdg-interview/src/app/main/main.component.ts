@@ -19,6 +19,7 @@ export class MainComponent {
   showCarts=false;
   minSlider:number=0;
   maxSlider:number=7000000000;
+  visibilityChart="show-chart"
 
  
 
@@ -62,7 +63,16 @@ export class MainComponent {
 
   }
   changeSelectChart(event: any) {
-    this.createChart(event.target.value)
+    if(event.target.value=="cards"){
+      this.visibilityChart="hide-chart"
+      this.showCarts=true;
+    }else{
+      this.visibilityChart="show-chart"
+      this.createChart(event.target.value)
+    }
+
+
+    
   }
   changeSelectContinent(event: any) {
     this.router.navigate(['/continent/'+event.target.value])
@@ -71,7 +81,8 @@ export class MainComponent {
 
   applySlider(){
     this.populationsFilter=this.populations.filter((continent)=>(continent.population<=this.maxSlider && continent.population>=this.minSlider))
-  
+    this.chart.destroy();
+    this.createChart("bar")
   }
 
   inputChangeMin(event:any){
@@ -84,24 +95,30 @@ export class MainComponent {
 
   createChart(typeChart: any) {
 
+    var populationsNames:string[];
+    populationsNames= this.populationsFilter.map(item => item.name);
+    var populationsNumbers:number[];
+    populationsNumbers = this.populationsFilter.map(item => item.population);
 
 
 
-
-    if (typeChart != "cards") {
+   
       this.showCarts=false;
       var data = {
-        labels: ["Europe", "Asia", "Africa", "Oceania", "North America", "South America", "Antarctica"],
+        labels: populationsNames,
         datasets: [{
           label: 'Population in continent',
-          data: [this.populationsFilter[0].population,this.populationsFilter[1].population,this.populationsFilter[2].population,this.populationsFilter[3].population,this.populationsFilter[4].population,this.populationsFilter[5].population,this.populationsFilter[6].population],
+          data: populationsNumbers,
           borderWidth: 1
         }]
       }
   
       var options: any;
       if (typeChart == "bar") {
+        
         options = {
+          responsive: true,
+          maintainAspectRatio: false, 
           scales: {
             x: {
               title: {
@@ -114,6 +131,7 @@ export class MainComponent {
                 display: true,
                 text: 'Population'
               }
+              
             }
           }
         }
@@ -135,9 +153,7 @@ export class MainComponent {
         data: data,
         options: options
       });
-    }else{
-      this.showCarts=true;
-    }
+    
     
 
 

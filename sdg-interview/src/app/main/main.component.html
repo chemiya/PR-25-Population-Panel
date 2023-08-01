@@ -71,13 +71,24 @@
         </div>
     </div>
 
+    <div class="container" *ngIf="showCarts">
+        <div class="row " >
+            <div class="col-12 col-md-4 p-2" *ngFor="let population of populationsFilter">
+                <div class="card-population p-2">
+                    <p>{{population.name}}</p>
+                    <p>{{population.population}} people</p>
+                </div>
 
-    <div class="container" *ngIf="!showCarts; else cartsView">
+
+            </div>
+        </div>
+
+        
+    </div>
+
+    <div class="container" [ngClass]="visibilityChart">
         <div class="row">
             <div class="col">
-
-                
-
                 <div class="chart-div">
                     <canvas id="myChart"></canvas>
                 </div>
@@ -87,22 +98,9 @@
 
 
 
-    <ng-template #cartsView>
-        <div class="container">
-            <div class="row " >
-                <div class="col-12 col-md-4 p-2" *ngFor="let population of populationsFilter">
-                    <div class="card-population p-2">
-                        <p>{{population.name}}</p>
-                        <p>{{population.population}} people</p>
-                    </div>
-
-
-                </div>
-            </div>
-
-            
-        </div>
-    </ng-template>
+    
+        
+    
 </body>
 
 </html>
