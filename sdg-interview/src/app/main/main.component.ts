@@ -13,160 +13,167 @@ Chart.register(...registerables);
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
-  constructor(private restCountriesService: RestCountriesService,private router: Router) { }
+  constructor(private restCountriesService: RestCountriesService, private router: Router) { }
   allCountries: any = [];
   chart: any;
-  showCarts=false;
-  minSlider:number=0;
-  maxSlider:number=7000000000;
-  visibilityChart="show-chart"
+  showCarts = false;
+  minSlider: number = 0;
+  maxSlider: number = 7000000000;
+  actualChart="bar"
 
- 
 
-  //populations: number[] = [0, 0, 0, 0, 0, 0, 0];
-
-  /*populations = {
-    "Europe": 0,
-    "Asia": 0,
-    "Africa": 0,
-    "Oceania": 0,
-    "North America": 0,
-    "South America": 0,
-    "Antarctica": 0
-  }*/
-  populations:Continent[]=[
-    {name:"Europe",population:0},
-    {name:"Asia",population:0},
-    {name:"Africa",population:0},
-    {name:"Oceania",population:0},
-    {name:"North America",population:0},
-    {name:"South America",population:0},
-    {name:"Antarctica",population:0}
+  populations: Continent[] = [
+    { name: "Europe", population: 0 },
+    { name: "Asia", population: 0 },
+    { name: "Africa", population: 0 },
+    { name: "Oceania", population: 0 },
+    { name: "North America", population: 0 },
+    { name: "South America", population: 0 },
+    { name: "Antarctica", population: 0 }
 
   ];
 
-  populationsFilter:Continent[]=[
-    {name:"Europe",population:0},
-    {name:"Asia",population:0},
-    {name:"Africa",population:0},
-    {name:"Oceania",population:0},
-    {name:"North America",population:0},
-    {name:"South America",population:0},
-    {name:"Antarctica",population:0}
+  populationsFilter: Continent[] = [
+    { name: "Europe", population: 0 },
+    { name: "Asia", population: 0 },
+    { name: "Africa", population: 0 },
+    { name: "Oceania", population: 0 },
+    { name: "North America", population: 0 },
+    { name: "South America", population: 0 },
+    { name: "Antarctica", population: 0 }
 
   ];
 
   ngOnInit() {
-    this.fetchData();
+    this.fetchDataContinents();
 
 
 
   }
+  //to manage when the user change the chart
   changeSelectChart(event: any) {
-    if(event.target.value=="cards"){
-      this.visibilityChart="hide-chart"
-      this.showCarts=true;
-    }else{
-      this.visibilityChart="show-chart"
-      this.createChart(event.target.value)
+    this.actualChart=event.target.value
+    if (this.actualChart == "cards") {
+      this.chart.destroy();//if cards are selected, we destroy the chart and show carts
+      this.showCarts = true;
+    } else {
+      this.showCarts = false;//else, we hide cars and create the chart depending of its type
+      this.createChart(this.actualChart)
     }
 
 
+
+  }
+
+  //when a continent is selected, we go to continent-view
+  changeSelectContinent(event: any) {
+    if(event.target.value!="Select continent"){
+      this.router.navigate(['/continent/' + event.target.value])
+    }
     
   }
-  changeSelectContinent(event: any) {
-    this.router.navigate(['/continent/'+event.target.value])
-  }
-  
 
-  applySlider(){
-    this.populationsFilter=this.populations.filter((continent)=>(continent.population<=this.maxSlider && continent.population>=this.minSlider))
-    this.chart.destroy();
-    this.createChart("bar")
+  //to apply the filter of population with the values of the slider
+  applySlider() {
+    //we filter the continents that fulfill the conditions
+    this.populationsFilter = this.populations.filter((continent) => (continent.population <= this.maxSlider && continent.population >= this.minSlider))
+    if(this.actualChart=="bar"){
+      this.chart.destroy();
+      this.createChart("bar")
+    }else if(this.actualChart=="pie"){
+      this.chart.destroy();
+      this.createChart("pie")
+    }
+    
+    
   }
 
-  inputChangeMin(event:any){
-    this.minSlider=(event.target.value)
+  //when the min value of the slider change, we store the new value
+  inputChangeMin(event: any) {
+    this.minSlider = event.target.value
   }
 
-  inputChangeMax(event:any){
-    this.maxSlider=(event.target.value)
+  //when the max value of the slider change, we store the new value
+  inputChangeMax(event: any) {
+    this.maxSlider = event.target.value
   }
 
   createChart(typeChart: any) {
 
-    var populationsNames:string[];
-    populationsNames= this.populationsFilter.map(item => item.name);
-    var populationsNumbers:number[];
+    //we obtain the names and populations of each continent
+    var populationsNames: string[];
+    populationsNames = this.populationsFilter.map(item => item.name);
+    var populationsNumbers: number[];
     populationsNumbers = this.populationsFilter.map(item => item.population);
 
+    
 
 
-   
-      this.showCarts=false;
-      var data = {
-        labels: populationsNames,
-        datasets: [{
-          label: 'Population in continent',
-          data: populationsNumbers,
-          borderWidth: 1
-        }]
-      }
-  
-      var options: any;
-      if (typeChart == "bar") {
-        
-        options = {
-          responsive: true,
-          maintainAspectRatio: false, 
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Continent'
-              }
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'Population'
-              }
-              
+    //we define the data of the chart
+    var data = {
+      labels: populationsNames,
+      datasets: [{
+        label: 'Population in continent',
+        data: populationsNumbers,
+        borderWidth: 1
+      }]
+    }
+
+    //we define the options of the chart depending of the type of char we want to make
+    var options: any;
+    if (typeChart == "bar") {
+
+      options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Continent'
             }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Population'
+            }
+
           }
         }
-      } else if (typeChart == "pie") {
-        options = {
-          responsive: true,
-          maintainAspectRatio: false
-        };
       }
-  
-  
-      if (this.chart) {
-        this.chart.destroy();
-      }
-  
-  
-      this.chart = new Chart("myChart", {
-        type: typeChart,
-        data: data,
-        options: options
-      });
-    
-    
+    } else if (typeChart == "pie") {
+      options = {
+        responsive: true,
+        maintainAspectRatio: false
+      };
+    }
+
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+
+    this.chart = new Chart("chart", {
+      type: typeChart,
+      data: data,
+      options: options
+    });
+
+
 
 
   }
 
 
-  fetchData() {
-    this.restCountriesService.getData()//busco el usuario
+  fetchDataContinents() {
+    this.restCountriesService.getDataContinents()
       .subscribe({
         next: (data) => {
           this.allCountries = data;
-          
 
+          //we obtain all the data from the countries and we group it by continents
           this.allCountries.forEach((country: any) => {
 
             switch (country.continents[0]) {
@@ -201,8 +208,8 @@ export class MainComponent {
 
           });
 
-          this.populationsFilter=this.populations;
-          this.createChart("bar");
+          this.populationsFilter = this.populations;//we store the original data in another array to filter it
+          this.createChart("bar");//first, we create a bar char
 
         },
         error: (e) => console.error(e)

@@ -12,7 +12,7 @@ export class RestCountriesService {
   constructor(private http: HttpClient) { }
   
   
-  getData(): Observable<any> {
+  getDataContinents(): Observable<any> {
     const url = `${this.apiUrl}all`;
     return this.http.get<any>(url);
   }

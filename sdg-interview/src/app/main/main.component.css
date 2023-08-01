@@ -23,16 +23,14 @@
     
 }
 
-.hide-chart{
-    visibility: hidden;
-  }
-  
- 
-.show-chart {
-    visibility: visible;
-  }
 
 
-  #myChart{
+/*to make the chart bigger*/
+  #chart{
     height:400px;
   }
+
+  .continent-name{
+    font-size: 30px;
+    font-weight: bold;
+}
