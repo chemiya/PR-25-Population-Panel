@@ -1,12 +1,42 @@
-
 .navbar{
     background-color: #0070AF;
+}
+
+.return-a{
+    
+    background-color:white;
+    border:none;
+    border-radius: 10px;
+    padding:5px;
+    text-decoration: none;
+    color:black;
+    
+}
+
+.image-table{
+    width:100px;
+    
+}
+
+td{
+    font-size: 20px;
+    vertical-align: middle;
 }
 
 .card-population{
     background-color: #0070AF;
     color:white;
     border-radius:10px;
+    height:100%;
+}
+
+.image-card{
+    width:150px;
+}
+
+.country-name{
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .slider{
@@ -30,9 +60,4 @@
  
 .show-chart {
     visibility: visible;
-  }
-
-
-  #myChart{
-    height:400px;
   }

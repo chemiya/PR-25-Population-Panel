@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
+
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <h1>SDG-Interview</h1>
@@ -18,25 +17,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
 
-                    <li class="nav-item p-2">
+                    <li class="nav-item p-2 ">
                         <select class="form-select" (change)="changeSelectChart($event)">
                             <option selected value="bar">Bar chart</option>
-                            <option value="pie">Pie chart</option>
+                            <option value="table">Table</option>
                             <option value="cards">Cards</option>
                         </select>
                     </li>
-                    <li class="nav-item p-2">
-                        <select class="form-select" (change)="changeSelectContinent($event)">
-                            <option selected value="continent">Select continent</option>
-                            <option value="Europe">Europe</option>
-                            <option value="Asia">Asia</option>
-                            <option value="Africa">Africa</option>
-                            <option value="Oceania">Oceania</option>
-                            <option value="North America">North America</option>
-                            <option value="South America">South America</option>
-                            
-                            
-                        </select>
+                    <li class="nav-item p-2 d-flex justify-content-center">
+                        <a class="return-a d-flex justify-content-center align-items-center flex-col" href="/">Return to continents</a>
                     </li>
 
                 </ul>
@@ -47,12 +36,12 @@
     <div class="container mt-3">
         <div class="row">
             <div class="col">
-                <h1 class="text-center">World population distribution by continents</h1>
+                <h1 class="text-center">Population distribution in {{continent}}</h1>
                 <div class="slider-div d-flex justify-content-center align-items-center">
                     <p class="me-2 mt-3">Filter by population</p>
-                    <mat-slider class="slider" min="0" max="7000000000" >
+                    <mat-slider class="slider" min="0" max="1500000000" >
                         <input value="0" matSliderStartThumb (input)="inputChangeMin($event)">
-                        <input value="7000000000" matSliderEndThumb (input)="inputChangeMax($event)">
+                        <input value="1500000000" matSliderEndThumb (input)="inputChangeMax($event)">
                     </mat-slider>
                     <button class="ms-2 button-apply" (click)="applySlider()">Apply</button>
                 </div>
@@ -71,12 +60,41 @@
         </div>
     </div>
 
-    <div class="container" *ngIf="showCarts">
+    <div class="container" *ngIf="showChart=='table'">
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name of the country</th>
+                        <th scope="col">Population</th>
+                        <th scope="col">Flag</th>
+                        <th scope="col">Capital</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let country of countriesFilter" >
+                        <td>{{country.name}}</td>
+                        <td>{{country.population}}</td>
+                        <td><img [src]="country.flag" class="image-table"/></td>
+                        <td>{{country.capital}}</td>
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" *ngIf="showChart=='cards'">
         <div class="row " >
-            <div class="col-12 col-md-4 p-2" *ngFor="let population of populationsFilter">
-                <div class="card-population p-2">
-                    <p>{{population.name}}</p>
-                    <p>{{population.population}} people</p>
+            <div class="col-12 col-md-4 p-2" *ngFor="let country of countriesFilter">
+                <div class="card-population p-2 d-flex justify-content-center align-items-center flex-column">
+                    <img [src]="country.flag" class="image-card"/>
+                    <p class="country-name">{{country.name}}</p>
+                    <p>{{country.population}} people</p>
+                    <p>{{country.capital}}</p>
                 </div>
 
 
@@ -97,10 +115,13 @@
     </div>
 
 
+   
 
     
-        
     
 </body>
-
 </html>
+
+
+
+
