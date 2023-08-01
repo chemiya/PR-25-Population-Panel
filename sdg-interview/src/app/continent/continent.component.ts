@@ -18,6 +18,7 @@ export class ContinentComponent {
   minSlider:number=0;
   maxSlider:number=1500000000;
   continent="";
+  visibilityChart="show-chart"
   
   ngOnInit(){
     this.continent=this.route.snapshot.params["continent"];
@@ -92,6 +93,8 @@ export class ContinentComponent {
 
     var options: any;
       options = {
+        responsive: true,
+        maintainAspectRatio: false, 
         scales: {
           x: {
             title: {
@@ -137,6 +140,12 @@ export class ContinentComponent {
   }
 
   changeSelectChart(event: any) {
+    if(event.target.value!="bar"){
+      this.visibilityChart="hide-chart"
+    }else{
+      this.visibilityChart="show-chart"
+    }
+    
     this.showChart=event.target.value
     
     

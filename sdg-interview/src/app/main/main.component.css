@@ -22,3 +22,17 @@
     color:white;
     
 }
+
+.hide-chart{
+    visibility: hidden;
+  }
+  
+ 
+.show-chart {
+    visibility: visible;
+  }
+
+
+  #myChart{
+    height:400px;
+  }
