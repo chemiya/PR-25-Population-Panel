@@ -54,11 +54,8 @@
         <div class="row">
             <div class="col">
                 <h1 class="text-center">World population distribution by continents</h1>
-                
-                   <app-slider [max]="7000000000" (valuesSlider)="applySlider($event)"></app-slider>
-                
-               
-
+                <!--slider component. We pass max value and we receive the event when we press the button-->
+                <app-slider [max]="7000000000" (valuesSlider)="applySlider($event)"></app-slider>
 
 
             </div>

@@ -13,7 +13,7 @@ export class SliderComponent {
 
 
 ngOnInit(){
-  this.maxSlider=this.max
+  this.maxSlider=this.max//we receive the max value
 }
 
   //when the min value of the slider change, we store the new value
@@ -26,6 +26,7 @@ ngOnInit(){
     this.maxSlider = event.target.value
   }
 
+  //when the user press the button, we emit the event to apply the slider
   applySlider(){
     this.valuesSlider.emit([this.minSlider,this.maxSlider]);
   }
