@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { RestCountriesService } from '../rest-countries-service/rest-countries.service';
+import { RestCountriesService } from '../../rest-countries-service/rest-countries.service';
 
 import { Chart, registerables } from 'chart.js';
-import { Continent } from '../models/Continent';
+import { Continent } from '../../models/Continent';
 import { Router } from '@angular/router';
 
 Chart.register(...registerables);
@@ -44,7 +44,7 @@ export class MainComponent {
   ];
 
   ngOnInit() {
-    this.fetchDataContinents();
+    this.fetchDataContinents();//first we search the data of the continents
 
 
 
@@ -77,12 +77,9 @@ export class MainComponent {
     //we filter the continents that fulfill the conditions
     
     this.populationsFilter = this.populations.filter((continent) => (continent.population <= event[1] && continent.population >= event[0]))
-    if(this.actualChart=="bar"){
+    if(this.actualChart=="bar" || this.actualChart=="pie"){
       this.chart.destroy();
-      this.createChart("bar")
-    }else if(this.actualChart=="pie"){
-      this.chart.destroy();
-      this.createChart("pie")
+      this.createChart(this.actualChart)
     }
     
     

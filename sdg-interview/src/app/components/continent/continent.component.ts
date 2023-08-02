@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RestCountriesService } from '../rest-countries-service/rest-countries.service';
-import { Country } from '../models/Country';
+import { RestCountriesService } from '../../rest-countries-service/rest-countries.service';
+import { Country } from '../../models/Country';
 import { Chart } from 'chart.js';
 
 @Component({
@@ -22,7 +22,7 @@ export class ContinentComponent {
 
   ngOnInit() {
     this.continent = this.route.snapshot.params["continent"];//we obtain the name of the continent
-    this.dataOfContinent(this.continent)
+    this.dataOfContinent(this.continent)//we obtain the countries in the continent
   }
 
   dataOfContinent(continent: string) {
