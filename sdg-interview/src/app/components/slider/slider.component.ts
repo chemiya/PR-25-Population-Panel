@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MaxSliderService } from 'src/app/max-slider-service/max-slider.service';
 
 @Component({
   selector: 'app-slider',
@@ -7,14 +8,18 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SliderComponent implements OnInit {
   minSlider: number = 0;
-  maxSlider: number = 7000000000;
+  maxSlider: number = 0;
   @Output() valuesSlider = new EventEmitter<number[]>();
-  @Input() max: number=0;
+  maxLimit:number=0;
 
+  constructor(private maxSliderService: MaxSliderService) { }
 
-ngOnInit(){
-  this.maxSlider=this.max//we receive the max value
-}
+  ngOnInit() {
+    this.maxSliderService.getValue().subscribe((max) => {
+      this.maxSlider = max//we receive the max value
+      this.maxLimit=max
+    });
+  }
 
   inputChangeMin(event: any) {
     this.minSlider = event.target.value
@@ -24,7 +29,7 @@ ngOnInit(){
     this.maxSlider = event.target.value
   }
 
-  applySlider(){
-    this.valuesSlider.emit([this.minSlider,this.maxSlider]);
+  applySlider() {
+    this.valuesSlider.emit([this.minSlider, this.maxSlider]);
   }
 }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RestCountriesService } from '../../rest-countries-service/rest-countries.service';
 import { Country } from '../../models/Country';
 import { Chart } from 'chart.js';
+import { MaxSliderService } from 'src/app/max-slider-service/max-slider.service';
 
 @Component({
   selector: 'app-continent',
@@ -10,7 +11,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./continent.component.scss']
 })
 export class ContinentComponent implements OnInit {
-  constructor(private restCountriesService: RestCountriesService, private route: ActivatedRoute) { }
+  constructor(private restCountriesService: RestCountriesService, private route: ActivatedRoute,private maxSliderService:MaxSliderService) { }
   countries: Country[] = [];
   countriesFilter: Country[] = [];
   showChart = "bar";
@@ -18,6 +19,7 @@ export class ContinentComponent implements OnInit {
   minSlider: number = 0;
   maxSlider: number = 1500000000;
   continent = "";
+  maxPopulationCountry:number=0;
 
   ngOnInit() {
     this.continent = this.route.snapshot.params["continent"];
@@ -41,6 +43,8 @@ export class ContinentComponent implements OnInit {
 
           this.countriesFilter = this.countries;//we store the original data in another array to filter it
           this.createChart();//first, we create a bar char
+          this.maxPopulationCountry=this.countries.reduce((max, object) => (object.population > max ? object.population : max), -Infinity);
+          this.maxSliderService.setValue(this.maxPopulationCountry);
         },
         error: (e) => console.error(e)
       });
