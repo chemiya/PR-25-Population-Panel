@@ -7,7 +7,7 @@ import { Chart } from 'chart.js';
 @Component({
   selector: 'app-continent',
   templateUrl: './continent.component.html',
-  styleUrls: ['./continent.component.css']
+  styleUrls: ['./continent.component.scss']
 })
 export class ContinentComponent implements OnInit {
   constructor(private restCountriesService: RestCountriesService, private route: ActivatedRoute) { }
