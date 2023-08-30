@@ -5,6 +5,7 @@ import { Chart, registerables } from 'chart.js';
 import { Continent } from '../../models/Continent';
 import { Router } from '@angular/router';
 import { CONTINENTS} from "./../../constants/continents.constants";
+import { MaxSliderService } from 'src/app/max-slider-service/max-slider.service';
 
 Chart.register(...registerables);
 
@@ -14,10 +15,11 @@ Chart.register(...registerables);
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  constructor(private restCountriesService: RestCountriesService, private router: Router) { }
+  constructor(private restCountriesService: RestCountriesService, private router: Router,private maxSliderService: MaxSliderService) { }
   allCountries: any = [];
   chart: any;
   showCarts = false;
+  maxPopulationContinent:number=0;
   
   actualChart="bar"
   CONTINENTS_EXCEPT_LAST=CONTINENTS.slice(0, CONTINENTS.length - 1);
@@ -166,6 +168,8 @@ export class MainComponent implements OnInit {
           });
           this.populationsFilter = this.populations;//we store the original data in another array to filter it
           this.createChart("bar");
+          this.maxPopulationContinent=this.populations.reduce((max, object) => (object.population > max ? object.population : max), -Infinity);
+          this.maxSliderService.setValue(this.maxPopulationContinent);
         },
         error: (e) => console.error(e)
       });
