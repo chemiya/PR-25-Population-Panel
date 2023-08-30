@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RestCountriesService } from '../../rest-countries-service/rest-countries.service';
 import { Country } from '../../models/Country';
@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
   templateUrl: './continent.component.html',
   styleUrls: ['./continent.component.css']
 })
-export class ContinentComponent {
+export class ContinentComponent implements OnInit {
   constructor(private restCountriesService: RestCountriesService, private route: ActivatedRoute) { }
   countries: Country[] = [];
   countriesFilter: Country[] = [];
@@ -19,9 +19,8 @@ export class ContinentComponent {
   maxSlider: number = 1500000000;
   continent = "";
 
-
   ngOnInit() {
-    this.continent = this.route.snapshot.params["continent"];//we obtain the name of the continent
+    this.continent = this.route.snapshot.params["continent"];
     this.dataOfContinent(this.continent)//we obtain the countries in the continent
   }
 
@@ -29,55 +28,30 @@ export class ContinentComponent {
     this.restCountriesService.dataOfContinent(continent)
       .subscribe({
         next: (data) => {
-
-
-          //we obtain all the data from the countries in the continent
           data.forEach((country: any) => {
-
             //in some cases the capital is not defined
             if (country.capital == undefined) {
               var countryElement = new Country(country.name.common, country.population, country.flags.png, "no data")
-
               this.countries.push(countryElement)
             } else {
               var countryElement = new Country(country.name.common, country.population, country.flags.png, country.capital[0])
-
               this.countries.push(countryElement)
             }
-
-
-
           })
 
-
-
-
           this.countriesFilter = this.countries;//we store the original data in another array to filter it
-
           this.createChart();//first, we create a bar char
-
-
-
-
         },
         error: (e) => console.error(e)
       });
-
-
-
   }
-
-
-
   createChart() {
-    //we obtain the names and populations of each country
+    //we obtain the names and populations of each country to show in the chart
     var countriesNames: string[];
     countriesNames = this.countriesFilter.map(item => item.name);
     var countriesPopulations: number[];
     countriesPopulations = this.countriesFilter.map(item => item.population);
-
-
-    //we define the chart
+    
     this.showChart = "bar";
     var data = {
       labels: countriesNames,
@@ -87,7 +61,6 @@ export class ContinentComponent {
         borderWidth: 1
       }]
     }
-
     var options: any;
     options = {
       responsive: true,
@@ -107,44 +80,32 @@ export class ContinentComponent {
         }
       }
     }
-
-
+    //before creating the new chart, we destroy the previous one
     if (this.chart) {
       this.chart.destroy();
     }
-
-
     this.chart = new Chart("chart", {
       type: "bar",
       data: data,
       options: options
     });
-
   }
 
-//to apply the filter of population with the values of the slider
   applySlider(event:any) {
     //we filter the continents that fulfill the conditions
     this.countriesFilter = this.countries.filter((country) => (country.population <= event[1] && country.population >= event[0]))
-    if(this.showChart=="bar"){//if bar chart is selected, we create a new one with the new data
+    if(this.showChart=="bar"){
+      //we destroy the previous chart because if we don't destroy it, we will have conflicts
       this.chart.destroy();
       this.createChart()
     }
   }
 
-  
-
-  //to manage when the user change the chart
   changeSelectChart(event: any) {
-  
-    this.showChart = event.target.value//we store the type of chart
+    this.showChart = event.target.value
     this.chart.destroy();
-    if(this.showChart=="bar"){//if the user wants a bar chart, we create a new one
-      
+    if(this.showChart=="bar"){
       this.createChart()
     }
-
-
   }
-
 }

@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
 <body>
 
     <!--navbar-->
@@ -19,7 +10,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-
                     <!--select for changing chart-->
                     <li class="nav-item p-2">
                         <select class="form-select" (change)="changeSelectChart($event)">
@@ -28,19 +18,12 @@
                             <option value="cards">Cards</option>
                         </select>
                     </li>
-
                     <!--select for changing continent-->
                     <li class="nav-item p-2">
                         <select class="form-select" (change)="changeSelectContinent($event)">
                             <option selected value="continent">Select continent</option>
-                            <option value="Europe">Europe</option>
-                            <option value="Asia">Asia</option>
-                            <option value="Africa">Africa</option>
-                            <option value="Oceania">Oceania</option>
-                            <option value="North America">North America</option>
-                            <option value="South America">South America</option>
-
-
+                            <option *ngFor="let continent of CONTINENTS_EXCEPT_LAST" [value]="continent">{{continent}}</option>
+                            
                         </select>
                     </li>
 
@@ -56,12 +39,8 @@
                 <h1 class="text-center">World population distribution by continents</h1>
                 <!--slider component. We pass max value and we receive the event when we press the button-->
                 <app-slider [max]="7000000000" (valuesSlider)="applySlider($event)"></app-slider>
-
-
             </div>
         </div>
-
-
     </div>
 
     <!--cards grid-->
@@ -72,12 +51,8 @@
                     <p class="continent-name">{{population.name}}</p>
                     <p>{{population.population}} inhabitants</p>
                 </div>
-
-
             </div>
         </div>
-
-
     </div>
 
     <!--container to show the chart-->
@@ -90,12 +65,5 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
 </body>
 
-</html>

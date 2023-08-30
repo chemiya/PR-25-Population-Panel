@@ -11,7 +11,6 @@ export class RestCountriesService {
 
   constructor(private http: HttpClient) { }
   
-  
   getDataContinents(): Observable<any> {// to obtain the data from all the countries
     const url = `${this.apiUrl}all`;
     return this.http.get<any>(url);

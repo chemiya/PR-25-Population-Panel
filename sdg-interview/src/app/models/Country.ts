@@ -10,6 +10,4 @@ export class Country{
         this.flag = flag;
         this.capital = capital;
       }
-
-    
 }
