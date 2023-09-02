@@ -95,7 +95,6 @@ export class ContinentComponent implements OnInit {
     if (this.chartCountries) {
       this.chartCountries.destroy();
     }
-    console.log(this.chartCountries)
     this.chartCountries = new Chart("chart", {
       type: "bar",
       data: data,

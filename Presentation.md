@@ -1,4 +1,4 @@
-<h1>CONTENT OF PRESENTATION OF MONDAY, AUGUST 28TH</h1>
+<h1>CONTENT OF PRESENTATION</h1>
 
 
 <h3>Sections</h3>
@@ -59,6 +59,19 @@
 <li>Comments</li>
 <li>Slider component used in both views</li>
 <li>Gitflow with master branch, develop branch and features branches</li>
+
+</ul>
+
+
+<h3>Proposed corrections</h3>
+<ul>
+<li>SCSS</li>
+<li>Cache</li>
+<li>Slider</li>
+<li>HTML initial lines</li>
+<li>Comments</li>
+<li>Constants</li>
+<li>NgOnInit</li>
 
 </ul>
 
