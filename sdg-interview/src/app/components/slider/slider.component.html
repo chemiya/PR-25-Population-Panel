@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body>
     <div class="row">
         <div class="col">
             <div class="slider-div d-flex justify-content-center align-items-center">
                 <p class="me-2 mt-3">Filter by population</p>
                 <!--slider to filter by population-->
-                <mat-slider class="slider" min="0" max="{{max}}">
+                <mat-slider class="slider" min="0" max="{{maxLimit}}">
                     <input value="0" matSliderStartThumb (input)="inputChangeMin($event)">
-                    <input value="{{max}}" matSliderEndThumb (input)="inputChangeMax($event)">
+                    <input value="{{maxLimit}}" matSliderEndThumb (input)="inputChangeMax($event)">
                 </mat-slider>
                 <button class="ms-2 button-apply" (click)="applySlider()">Apply</button>
             </div>
@@ -30,4 +23,4 @@
         </div>
     </div>
 </body>
-</html>
+
