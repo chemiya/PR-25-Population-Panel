@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './components/main/main.component';
 import { ContinentComponent } from './components/continent/continent.component';
 
+
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'continent/:continent', component: ContinentComponent }
@@ -10,6 +11,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+
 })
 export class AppRoutingModule { }

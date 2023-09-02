@@ -4,8 +4,9 @@ import { RestCountriesService } from '../../rest-countries-service/rest-countrie
 import { Chart, registerables } from 'chart.js';
 import { Continent } from '../../models/Continent';
 import { Router } from '@angular/router';
-import { CONTINENTS} from "./../../constants/continents.constants";
+import { CONTINENTS } from "./../../constants/continents.constants";
 import { MaxSliderService } from 'src/app/max-slider-service/max-slider.service';
+
 
 Chart.register(...registerables);
 
@@ -15,14 +16,14 @@ Chart.register(...registerables);
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  constructor(private restCountriesService: RestCountriesService, private router: Router,private maxSliderService: MaxSliderService) { }
+  constructor(private restCountriesService: RestCountriesService, private router: Router, private maxSliderService: MaxSliderService) { }
   allCountries: any = [];
   chart: any;
   showCarts = false;
-  maxPopulationContinent:number=0;
-  
-  actualChart="bar"
-  CONTINENTS_EXCEPT_LAST=CONTINENTS.slice(0, CONTINENTS.length - 1);
+  maxPopulationContinent: number = 0;
+
+  actualChart = "bar"
+  CONTINENTS_EXCEPT_LAST = CONTINENTS.slice(0, CONTINENTS.length - 1);
 
 
   populations: Continent[] = [
@@ -50,9 +51,9 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.fetchDataContinents();
   }
-  
+
   changeSelectChart(event: any) {
-    this.actualChart=event.target.value
+    this.actualChart = event.target.value
     if (this.actualChart == "cards") {
       this.chart.destroy();//we destroy the chart that is previously created
       this.showCarts = true;
@@ -63,15 +64,15 @@ export class MainComponent implements OnInit {
   }
 
   changeSelectContinent(event: any) {
-    if(event.target.value!="Select continent"){
+    if (event.target.value != "Select continent") {
       this.router.navigate(['/continent/' + event.target.value])
     }
   }
 
-  applySlider(event:any) {
+  applySlider(event: any) {
     //we filter the continents that fulfill the conditions 
     this.populationsFilter = this.populations.filter((continent) => (continent.population <= event[1] && continent.population >= event[0]))
-    if(this.actualChart=="bar" || this.actualChart=="pie"){
+    if (this.actualChart == "bar" || this.actualChart == "pie") {
       this.chart.destroy();
       this.createChart(this.actualChart)
     }
@@ -131,47 +132,59 @@ export class MainComponent implements OnInit {
   }
 
   fetchDataContinents() {
-    this.restCountriesService.getDataContinents()
-      .subscribe({
-        next: (data) => {
-          this.allCountries = data;
-          this.allCountries.forEach((country: any) => {
+    var data = localStorage.getItem('continents')//we obtain data from cache
+    if (data) {
+      const continentsData = JSON.parse(data);
+      this.populations = continentsData
+      this.initView()
+    } else {
+      this.restCountriesService.getDataContinents()
+        .subscribe({
+          next: (data) => {
+            this.allCountries = data;
+            this.allCountries.forEach((country: any) => {
 
-            switch (country.continents[0]) {
-              case CONTINENTS[0]:
-                this.populations[0].population += country.population;
-                break;
-              case CONTINENTS[1]:
-                this.populations[1].population += country.population;
-                break;
+              switch (country.continents[0]) {
+                case CONTINENTS[0]:
+                  this.populations[0].population += country.population;
+                  break;
+                case CONTINENTS[1]:
+                  this.populations[1].population += country.population;
+                  break;
 
-              case CONTINENTS[2]:
-                this.populations[2].population += country.population;
-                break;
+                case CONTINENTS[2]:
+                  this.populations[2].population += country.population;
+                  break;
 
-              case CONTINENTS[3]:
-                this.populations[3].population += country.population;
-                break;
+                case CONTINENTS[3]:
+                  this.populations[3].population += country.population;
+                  break;
 
-              case CONTINENTS[4]:
-                this.populations[4].population += country.population;
-                break;
-              case CONTINENTS[5]:
-                this.populations[5].population += country.population;
-                break;
-              case CONTINENTS[6]:
-                this.populations[6].population += country.population;
-                break;
-              default:
-                console.log(country.continents[0])
-            }
-          });
-          this.populationsFilter = this.populations;//we store the original data in another array to filter it
-          this.createChart("bar");
-          this.maxPopulationContinent=this.populations.reduce((max, object) => (object.population > max ? object.population : max), -Infinity);
-          this.maxSliderService.setValue(this.maxPopulationContinent);
-        },
-        error: (e) => console.error(e)
-      });
+                case CONTINENTS[4]:
+                  this.populations[4].population += country.population;
+                  break;
+                case CONTINENTS[5]:
+                  this.populations[5].population += country.population;
+                  break;
+                case CONTINENTS[6]:
+                  this.populations[6].population += country.population;
+                  break;
+                default:
+                  console.log(country.continents[0])
+              }
+            });
+            this.initView()
+            localStorage.setItem('continents', JSON.stringify(this.populations));//we store data in cache
+          },
+          error: (e) => console.error(e)
+        });
+      }
+  }
+
+  initView(){
+    this.populationsFilter = this.populations;//we store the original data in another array to filter it
+    this.createChart("bar");
+    this.maxPopulationContinent = this.populations.reduce((max, object) => (object.population > max ? object.population : max), -Infinity);
+    this.maxSliderService.setValue(this.maxPopulationContinent);
   }
 }
