@@ -18,9 +18,9 @@
 <h3>How to deploy the project</h3>
 
 <ol>
-<li>git clone https://github.com/chemiya/PR-25-SDG-Interview.git</li>
-<li>cd PR-25-SDG-Interview</li>
-<li>cd sdg-interview</li>
+<li>git clone https://github.com/chemiya/PR-25-Population-Panel.git</li>
+<li>cd PR-25-Population-Panel</li>
+<li>cd population-panel</li>
 <li>npm install</li>
 <li>ng serve</li>
 <li>http://localhost:4200/</li>
@@ -75,3 +75,12 @@
 
 </ul>
 
+
+
+<h3>Links</h3>
+<ul>
+<li>Github repository:</li>
+<li>Youtube video:</li>
+
+
+</ul>
